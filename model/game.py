@@ -36,7 +36,7 @@ class Game:
             # TODO handle group members should be more than 1
             pass
 
-    def answerQuestion(self, username, answerText):
+    def answerQuestion(self, username, answer_text):
         return True
 
     def end(self):

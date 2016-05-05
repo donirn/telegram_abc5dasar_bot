@@ -34,7 +34,7 @@ def create(bot, update):
 
 def join(bot, update):
     if checkChatId(update.message.chat_id) and game.join(update.message.from_user.username):
-        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name + ' dah gabung, lo kaga ikut?')
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name + ' sudah bergabung. Ayo /mulai permainannya!')
 
 
 def start(bot, update):
@@ -50,8 +50,8 @@ def start(bot, update):
 def answer(bot, update):
     if checkChatId(update.message.chat_id) and game.isStarted:
         username = update.message.from_user.username
-        answerText = update.message.text
-        if game.answerQuestion(username, answerText):
+        answer_text = update.message.text
+        if game.answerQuestion(username, answer_text):
             bot.sendMessage(update.message.chat_id, text='Jawaban benar!')
         else:
             bot.sendMessage(update.message.chat_id, text='Jawaban salah!')
