@@ -36,6 +36,9 @@ class Game:
             # TODO handle group members should be more than 1
             pass
 
+    def answerQuestion(self, username, answerText):
+        return True
+
     def end(self):
         self.isCreated = False
         self.isStarted = False

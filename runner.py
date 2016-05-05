@@ -41,13 +41,24 @@ def start(bot, update):
     if checkChatId(update.message.chat_id) and game.start():
         game.start()
         bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
-        
+
         global currentChat_id
         currentChat_id = update.message.chat_id
-        updater.job_queue.put(end, interval=5, repeat=False)
+        updater.job_queue.put(end, interval=20, repeat=False)
+
+
+def answer(bot, update):
+    if checkChatId(update.message.chat_id) and game.isStarted:
+        username = update.message.from_user.username
+        answerText = update.message.text
+        if game.answerQuestion(username, answerText):
+            bot.sendMessage(update.message.chat_id, text='Jawaban benar!')
+        else:
+            bot.sendMessage(update.message.chat_id, text='Jawaban salah!')
 
 
 def end(bot):
+    game.end()
     bot.sendMessage(currentChat_id, text='Permainan berakhir!')
 
 
@@ -93,6 +104,7 @@ def main():
     dp.addHandler(CommandHandler("buat", create))
     dp.addHandler(CommandHandler("ikut", join))
     dp.addHandler(CommandHandler("mulai", start))
+    dp.addHandler(CommandHandler("j", answer))
 
     # log all errors
     dp.addErrorHandler(error)
