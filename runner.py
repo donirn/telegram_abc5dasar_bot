@@ -17,18 +17,23 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import logging, secret
+from telegram.ext import Updater, CommandHandler
+import logging
+import secret
+
 
 # Essential part of the class
 def create(bot, update):
     bot.sendMessage(update.message.chat_id, text='Ayo /ikut game-nya!\nLalu kita /mulai pertarungan ini!')
 
+
 def join(bot, update):
     bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name + ' dah gabung, lo kaga ikut?')
 
+
 def start(bot, update):
     bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
+
 
 # Enable logging
 logging.basicConfig(
@@ -77,6 +82,7 @@ def main():
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+
 
 if __name__ == '__main__':
     main()
