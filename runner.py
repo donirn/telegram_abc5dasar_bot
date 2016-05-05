@@ -17,18 +17,30 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import logging, secret
+from telegram.ext import Updater, CommandHandler
+import logging
+import secret
+
 
 # Essential part of the class
 def create(bot, update):
-    bot.sendMessage(update.message.chat_id, text='Ayo /ikut game-nya!\nLalu kita /mulai pertarungan ini!')
+    if checkChatId(update.message.chat_id):
+        bot.sendMessage(update.message.chat_id, text='Ayo /ikut game-nya!\nLalu kita /mulai pertarungan ini!')
+
 
 def join(bot, update):
-    bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name + ' dah gabung, lo kaga ikut?')
+    if checkChatId(update.message.chat_id):
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name + ' dah gabung, lo kaga ikut?')
+
 
 def start(bot, update):
-    bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
+    if checkChatId(update.message.chat_id):
+        bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
+
+
+# Util function
+def checkChatId(chat_id):
+    return chat_id == -110624104 or chat_id == 164707028
 
 # Enable logging
 logging.basicConfig(
@@ -41,7 +53,7 @@ logger = logging.getLogger(__name__)
 # Define a few command handlers. These usually take the two arguments bot and
 # update. Error handlers also receive the raised TelegramError object in error.
 def hej(bot, update):
-    if update.message.chat_id == -110624104 or update.message.chat_id == 164707028:
+    if checkChatId(update.message.chat_id):
         bot.sendMessage(update.message.chat_id, text='Hej, ' + update.message.from_user.first_name + '!')
 
 
@@ -77,6 +89,7 @@ def main():
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+
 
 if __name__ == '__main__':
     main()
