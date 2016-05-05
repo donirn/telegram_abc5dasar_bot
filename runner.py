@@ -22,9 +22,9 @@ import logging
 import secret
 from model.game import *
 
-
 # Essential part of the file
 game = Game()
+currentChat_id = 0
 
 
 def create(bot, update):
@@ -39,12 +39,22 @@ def join(bot, update):
 
 def start(bot, update):
     if checkChatId(update.message.chat_id) and game.start():
+        game.start()
         bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
+        
+        global currentChat_id
+        currentChat_id = update.message.chat_id
+        updater.job_queue.put(end, interval=5, repeat=False)
+
+
+def end(bot):
+    bot.sendMessage(currentChat_id, text='Permainan berakhir!')
 
 
 # Util function
 def checkChatId(chat_id):
     return chat_id == -110624104 or chat_id == 164707028
+
 
 # Enable logging
 logging.basicConfig(
@@ -69,10 +79,11 @@ def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
 
-def main():
-    # Create the EventHandler and pass it your bot's token.
-    updater = Updater(secret.token)
+# Create the EventHandler and pass it your bot's token.
+updater = Updater(secret.token)
 
+
+def main():
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 

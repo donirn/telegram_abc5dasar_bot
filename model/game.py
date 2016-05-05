@@ -26,7 +26,7 @@ class Game:
             pass
 
     def start(self):
-        if self.isCreated and self.group.countMembers() > 1:
+        if self.isCreated and self.group.countMembers() == 1:
             self.isStarted = True
             return True
         elif not self.isCreated:
