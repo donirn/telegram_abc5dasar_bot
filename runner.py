@@ -20,21 +20,25 @@ bot.
 from telegram.ext import Updater, CommandHandler
 import logging
 import secret
+from model.game import *
 
 
-# Essential part of the class
+# Essential part of the file
+game = Game()
+
+
 def create(bot, update):
-    if checkChatId(update.message.chat_id):
+    if checkChatId(update.message.chat_id) and game.create():
         bot.sendMessage(update.message.chat_id, text='Ayo /ikut game-nya!\nLalu kita /mulai pertarungan ini!')
 
 
 def join(bot, update):
-    if checkChatId(update.message.chat_id):
+    if checkChatId(update.message.chat_id) and game.join(update.message.from_user.username):
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name + ' dah gabung, lo kaga ikut?')
 
 
 def start(bot, update):
-    if checkChatId(update.message.chat_id):
+    if checkChatId(update.message.chat_id) and game.start():
         bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
 
 
