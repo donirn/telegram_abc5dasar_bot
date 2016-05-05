@@ -43,8 +43,8 @@ class Game:
         self.question = Question()
 
     def answerQuestion(self, username, answer_text):
-        # TODO check if the answer is true given the question
-        return True
+        # TODO flag if answer correctly
+        return self.question.checkAnswer(answer_text)
 
     def endQuestion(self):
         # TODO check if end game condition is met then end the game

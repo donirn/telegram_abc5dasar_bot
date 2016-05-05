@@ -40,6 +40,7 @@ def join(bot, update):
 def start(bot, update):
     if checkChatId(update.message.chat_id) and game.start():
         bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
+        bot.sendMessage(update.message.chat_id, text=game.question.getText())
 
         global currentChat_id
         currentChat_id = update.message.chat_id
@@ -49,7 +50,7 @@ def start(bot, update):
 def answer(bot, update):
     if checkChatId(update.message.chat_id) and game.isStarted:
         username = update.message.from_user.username
-        answer_text = update.message.text
+        answer_text = update.message.text[3:]
         if game.answerQuestion(username, answer_text):
             bot.sendMessage(update.message.chat_id, text='Jawaban benar!')
         else:
