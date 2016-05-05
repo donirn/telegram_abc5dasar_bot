@@ -39,7 +39,6 @@ def join(bot, update):
 
 def start(bot, update):
     if checkChatId(update.message.chat_id) and game.start():
-        game.start()
         bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
 
         global currentChat_id
@@ -58,8 +57,12 @@ def answer(bot, update):
 
 
 def end(bot):
-    game.end()
-    bot.sendMessage(currentChat_id, text='Permainan berakhir!')
+    if game.endQuestion():
+        game.end()
+        bot.sendMessage(currentChat_id, text='Permainan berakhir!')
+    else:
+        # TODO game is not yet over, startQuestion again
+        pass
 
 
 # Util function

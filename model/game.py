@@ -1,4 +1,5 @@
-from model.group import *
+from model.group import Group
+from model.question import Question
 
 
 class Game:
@@ -6,6 +7,7 @@ class Game:
         self.group = Group()
         self.isCreated = False
         self.isStarted = False
+        self.question = Question()
 
     def create(self):
         if not self.isCreated:
@@ -28,6 +30,7 @@ class Game:
     def start(self):
         if self.isCreated and self.group.countMembers() == 1:
             self.isStarted = True
+            self.startQuestion()
             return True
         elif not self.isCreated:
             # TODO handle game not created yet
@@ -36,7 +39,15 @@ class Game:
             # TODO handle group members should be more than 1
             pass
 
+    def startQuestion(self):
+        self.question = Question()
+
     def answerQuestion(self, username, answer_text):
+        # TODO check if the answer is true given the question
+        return True
+
+    def endQuestion(self):
+        # TODO check if end game condition is met then end the game
         return True
 
     def end(self):
