@@ -4,6 +4,7 @@
 # Group model
 # Handles the group management
 
+
 class Group:
     members = []
 
@@ -29,3 +30,13 @@ class Group:
 
     def countMembers(self):
         return len(self.members)
+
+    def getAllMembersNotInTheList(self, members_list):
+        not_in_the_list_members = []
+        for member in self.members:
+            if member not in members_list:
+                not_in_the_list_members.append(member)
+        return not_in_the_list_members
+
+    def setMembers(self, members_list):
+        self.members = members_list

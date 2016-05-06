@@ -51,6 +51,7 @@ def answer(bot, update):
     if checkChatId(update.message.chat_id) and game.isStarted:
         username = update.message.from_user.username
         answer_text = update.message.text[3:]
+        # TODO user shouldn't answer if they already gave correct answer
         if game.answerQuestion(username, answer_text):
             bot.sendMessage(update.message.chat_id, text='Jawaban benar!')
         else:
@@ -59,10 +60,16 @@ def answer(bot, update):
 
 def end(bot):
     if game.endQuestion():
-        game.end()
         bot.sendMessage(currentChat_id, text='Permainan berakhir!')
+        winner = game.checkWinner()
+        if winner is None:
+            bot.sendMessage(currentChat_id, text='Tidak ada pemenang pada permainan ini.')
+        else:
+            bot.sendMessage(currentChat_id, text='Pemenangnya adalah @' + winner)
+        game.end()
     else:
         # TODO game is not yet over, startQuestion again
+        # TODO give elimination members notice if there is any
         pass
 
 

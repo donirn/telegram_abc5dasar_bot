@@ -8,6 +8,7 @@ class Game:
         self.isCreated = False
         self.isStarted = False
         self.question = Question()
+        self.correct_members = []
 
     def create(self):
         if not self.isCreated:
@@ -41,14 +42,24 @@ class Game:
 
     def startQuestion(self):
         self.question = Question()
+        self.correct_members = []
 
     def answerQuestion(self, username, answer_text):
         # TODO flag if answer correctly
-        return self.question.checkAnswer(answer_text)
+        is_correct = self.question.checkAnswer(answer_text)
+        if is_correct:
+            self.correct_members.append(username)
+        return is_correct
 
     def endQuestion(self):
-        # TODO check if end game condition is met then end the game
-        return True
+        self.group.setMembers(self.correct_members)
+        return self.group.members > 1
+
+    def checkWinner(self):
+        if self.group.countMembers() == 1:
+            return self.group.members[0]
+        else:
+            return None
 
     def end(self):
         self.isCreated = False

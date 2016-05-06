@@ -48,5 +48,7 @@ class MyTestCase(unittest.TestCase):
         group.removeAllMembers()
         assert len(group.members) == 0
 
+# TODO update tests
+
 if __name__ == '__main__':
     unittest.main()
