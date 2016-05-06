@@ -48,6 +48,7 @@ class Game:
         # TODO flag if answer correctly
         is_correct = self.question.checkAnswer(answer_text)
         if is_correct:
+            # TODO prevent user to be added twice in correct_members
             self.correct_members.append(username)
         return is_correct
 

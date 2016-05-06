@@ -39,7 +39,7 @@ def join(bot, update):
 
 def start(bot, update):
     if checkChatId(update.message.chat_id) and game.start():
-        bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
+        bot.sendMessage(update.message.chat_id, text='Permainan dimulai! Ketik /j [jawaban] untuk menjawab.')
         bot.sendMessage(update.message.chat_id, text=game.question.getText())
         # TODO give information about answering command, it is /j
 
