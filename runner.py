@@ -41,6 +41,7 @@ def start(bot, update):
     if checkChatId(update.message.chat_id) and game.start():
         bot.sendMessage(update.message.chat_id, text='Permainan dimulai!')
         bot.sendMessage(update.message.chat_id, text=game.question.getText())
+        # TODO give information about answering command, it is /j
 
         global currentChat_id
         currentChat_id = update.message.chat_id
@@ -52,6 +53,7 @@ def answer(bot, update):
         username = update.message.from_user.username
         answer_text = update.message.text[3:]
         # TODO user shouldn't answer if they already gave correct answer
+        # TODO end question if every one already gave correct answers
         if game.answerQuestion(username, answer_text):
             bot.sendMessage(update.message.chat_id, text='Jawaban benar!')
         else:
